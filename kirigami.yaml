@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://cdn.jsdelivr.net/gh/php-kirigami/kirigami@main/packages/kirigami/kirigami.schema.json
+
+kirigami:
+  project:  Kirigami Blog
+  baseurl:  https://example.github.io/kirigami-blog
+  root:     src
+  banner:   banner.txt
+
+  # Any other key here is free-form project data: it becomes a PHP variable of
+  # the same name on every page and in the header / footer includes.
+  author:      Your Name
+  email:       you@example.com
+  description: A blog built with Kirigami.
+  tagline:     Notes on making things.
+
+
+# SEO: <title>, description, Open Graph, Twitter Card, canonical, favicon and a
+# schema.org JSON-LD graph, derived from the `kirigami:` keys above and each
+# page's PHPDOC. An empty map is enough; `jsonld: false` drops the JSON-LD.
+# Drop favicon.ico / apple-touch-icon.png in src/ and they're picked up.
+seo: {}
+
+
+prepros:
+  before: _layouts/header.php   # prepended to every page
+  after:  _layouts/footer.php   # appended to every page
+  format: true
+  includes: [_lib/functions.php] # register custom tags / shortcodes / hooks here
+  types:                        # a page opts in with @type <name>
+    page:                       # title + lead + prose body (see about/)
+      before: _layouts/types/page.before.php
+      after:  _layouts/types/page.after.php
+    post:                       # date + title + lead + prose + tags (see posts/)
+      before: _layouts/types/post.before.php
+      after:  _layouts/types/post.after.php
+
+
+sass:
+  style: expanded
+
+
+tasks:
+  - name:  css-core
+    type:  sass
+    entry: styles/kirigami.core.scss
+
+  - name:  js-core
+    type:  esbuild
+    entry: scripts/kirigami.core.js
+
+
+plugins:
+  # Build-time syntax highlighting for fenced code blocks: nothing
+  # highlight.js-related is shipped to the browser.
+  - name: "@kirigami/plugin-highlight"
+    active: true
+    options:
+      languages: [php, javascript, bash, shell, json, yaml, css, scss, xml, markdown]
+      theme: auto
+      copyButton: true   # needs an esbuild task — `js-core` below
