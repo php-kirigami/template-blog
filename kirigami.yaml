@@ -49,6 +49,24 @@ tasks:
     entry: scripts/kirigami.core.js
 
 
+# What a client may edit in Kiri Studio (https://github.com/php-kirigami/kiri-studio):
+# posts can be added and deleted, each starting from this header. `today` becomes
+# the creation date. Remove the block to keep the site developer-only.
+studio:
+  include:
+    - path: src/posts/*/_index.md
+      label: Posts
+      create: true
+      header:
+        type: post
+        date: today
+        abstract: ""
+        tags: ""
+        draft: "false"
+        ld_type: BlogPosting
+        og_type: article
+
+
 plugins:
   # Build-time syntax highlighting for fenced code blocks: nothing
   # highlight.js-related is shipped to the browser.

@@ -1,3 +1,11 @@
+@title    Writing in Markdown
+@type     post
+@date     2026-09-15
+@abstract A tour of what the Markdown engine gives you for free.
+@tags     markdown, writing
+@ld_type  BlogPosting
+@og_type  article
+
 Kirigami ships a GitHub-flavoured Markdown engine, so most posts need nothing
 else.
 

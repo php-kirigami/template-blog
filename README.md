@@ -16,7 +16,7 @@ A blog template for **[Kirigami](https://github.com/php-kirigami/kirigami)** —
 
 ---
 
-Posts written in Markdown, compiled to dependency-free static HTML — no PHP
+Posts written in Markdown (one `_index.md` each), compiled to dependency-free static HTML — no PHP
 install, no server, no database. A home page with the latest posts, an archive
 grouped by year, a post layout with date and tags, dark mode, build-time syntax
 highlighting and `BlogPosting` JSON-LD.
@@ -34,27 +34,21 @@ commands and the dev server from the Command Palette and the status bar.
 
 ## Write a post
 
-A post is a folder under `src/posts/` holding two files. The folder name is the
-URL slug.
+A post is a folder under `src/posts/` holding one file, `_index.md`. The folder
+name is the URL slug. The `@tag` lines at the top are the post's header, then a
+blank line, then the text in GitHub-flavoured Markdown:
 
-`src/posts/my-first-post/_index.php` — the front matter:
+```markdown
+@title    My first post
+@type     post
+@date     2026-10-05
+@abstract One sentence shown in the lists and as the SEO description.
+@tags     notes, travel
+@ld_type  BlogPosting
+@og_type  article
 
-```php
-<?php
-/**
- * @title    My first post
- * @section  posts
- * @type     post
- * @date     2026-10-05
- * @abstract One sentence shown in the lists and as the SEO description.
- * @tags     notes, travel
- * @ld_type  BlogPosting
- * @og_type  article
- * @content  _post.md
- */
+The text of the post, in **Markdown**.
 ```
-
-`src/posts/my-first-post/_post.md` — the body, in GitHub-flavoured Markdown.
 
 The home page and `posts/` pick it up automatically, newest `@date` first. Add
 `@draft true` to keep a post out of the lists while you write it (the page is
@@ -72,7 +66,7 @@ src/
   _lib/functions.php          # blog_posts(), blog_entry(), blog_date()
   _index.php                  # → index.html (latest posts)
   posts/_index.php            # → posts/index.html (archive by year)
-  posts/<slug>/_index.php     # → posts/<slug>/index.html
+  posts/<slug>/_index.md      # → posts/<slug>/index.html (one Markdown page per post)
   about/_index.php            # → about/index.html
   styles/kirigami.core.scss   # Sass entry — partials/_conf.scss holds the theme
   scripts/kirigami.core.js    # esbuild entry
@@ -84,5 +78,11 @@ Retheme in `src/styles/partials/_conf.scss` — it `@forward`s
 override away. `sitemap.xml` and `robots.txt` are generated from
 `kirigami.baseurl`. Pushing to `main` deploys to GitHub Pages through
 `.github/workflows/page.yml`.
+
+## Kiri Studio
+
+The `studio:` block in `kirigami.yaml` lets a client add, edit and delete posts from
+[Kiri Studio](https://github.com/php-kirigami/kiri-studio) without touching Git: each new
+post starts from the `header` defaults there. Remove the block for a developer-only site.
 
 MIT

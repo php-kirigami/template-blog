@@ -91,15 +91,15 @@
             }
         </script>
     </head>
-    <body class="page-posts">
+    <body class="page-home">
         <a class="skip-link" href="#main">Skip to content</a>
         <header class="site-header">
             <div class="wrap site-header__inner">
                 <a class="brand" href="../../">Kirigami Blog</a>
                 <nav class="site-nav" id="site-nav" aria-label="Primary">
                     <ul>
-                        <li><a href="../../">Home</a></li>
-                        <li><a href="../../posts/" aria-current="page">Posts</a></li>
+                        <li><a href="../../" aria-current="page">Home</a></li>
+                        <li><a href="../../posts/">Posts</a></li>
                         <li><a href="../../about/">About</a></li>
                     </ul>
                 </nav>
@@ -123,13 +123,13 @@
                     <p class="lead">The first post: how this blog is put together.</p>
                 </header>
                 <div class="prose">
-                    <p class="lead">Every post is a folder with two files: a tiny `_index.php` and a Markdown body.</p>
+                    <p class="lead">Every post is a folder holding one file: an `_index.md` that starts with a few `@tag` lines.</p>
                     <p>Welcome. This blog is a <a href="https://github.com/php-kirigami/kirigami" target="_blank" rel="noopener noreferrer">Kirigami</a> site, so it compiles to plain static HTML: no server, no database, nothing to patch.</p>
                     <h2 id="writing-a-post">Writing a post</h2>
                     <ol>
-                        <li>Create <code>src/posts/&lt;slug&gt;/_index.php</code> with a PHPDOC block (<code>@title</code>, <code>@date</code>, <code>@abstract</code>, <code>@tags</code>, <code>@type post</code>, <code>@content _post.md</code>).</li>
-                        <li>Write the text in <code>src/posts/&lt;slug&gt;/_post.md</code>.</li>
-                        <li>Run <code>npx kiri serve</code> and open the page.</li>
+                        <li>Create <code>src/posts/&lt;slug&gt;/_index.md</code>.</li>
+                        <li>Start it with the header (<code>@title</code>, <code>@type post</code>, <code>@date</code>, <code>@abstract</code>, <code>@tags</code>), then a blank line.</li>
+                        <li>Write the text in Markdown below it, and run <code>npx kiri serve</code>.</li>
                     </ol>
                     <p>The home page and the archive pick the new post up automatically, sorted by <code>@date</code>.</p>
                     <h2 id="publishing">Publishing</h2>

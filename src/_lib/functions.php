@@ -2,10 +2,11 @@
 /**
  * prepros.includes entry — include_once'd before any page renders.
  *
- * Blog helpers: every folder under src/posts/ that holds an _index.php is a
- * post. Its PHPDOC block is the post's front matter:
+ * Blog helpers: every folder under src/posts/ that holds an _index.md is a
+ * post. The `@tag` lines at the top of that file are the post's header:
  *
  *   @title    Post title
+ *   @type     post                (the page type that lays the post out)
  *   @date     2026-09-01          (required, YYYY-MM-DD)
  *   @abstract One-sentence summary (lists, SEO description)
  *   @tags     php, static         (comma separated, optional)
@@ -24,12 +25,12 @@ function blog_posts(): array
 {
     $posts = [];
 
-    foreach (glob(dirname(__DIR__) . '/posts/*/_index.php') ?: [] as $file) {
-        // FS::phpFileInfo() caches and returns a shared object: clone it so
-        // the keys added below don't leak into the post's own page variables.
-        $info = FS::phpFileInfo($file);
+    foreach (glob(dirname(__DIR__) . '/posts/*', GLOB_ONLYDIR) ?: [] as $dir) {
+        // A post is a page: its `_index.md` (or an `_index.php`, for a post
+        // that needs PHP). phpFileInfo() returns a fresh copy to extend.
+        $file = FS::indexFile($dir);
+        $info = $file ? FS::phpFileInfo($file) : false;
         if (!$info || empty($info->date)) continue;
-        $info = clone $info;
         if (in_array(strtolower(trim((string) ($info->draft ?? ''))), ['1', 'true', 'yes', 'on'], true)) continue;
 
         $info->slug     = basename(dirname($file));
