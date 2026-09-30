@@ -6,7 +6,7 @@
 @ld_type  BlogPosting
 @og_type  article
 
-{% lead Every post is a folder holding one file: an `_index.md` that starts with a few `@tag` lines. %}
+{% lead Every post is a folder holding a single Markdown file with a short header on top. %}
 
 Welcome. This blog is a [Kirigami](https://github.com/php-kirigami/kirigami)
 site, so it compiles to plain static HTML: no server, no database, nothing to
